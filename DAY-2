@@ -1,0 +1,53 @@
+1.Valid Anagram
+2. Logger Rate Limiter
+
+bool isAnagram(string s, string t)
+    {
+       if(s.length()!=t.length())
+       {
+           return false;
+       }
+       unordered_map<char,int> mp;
+        
+       for(int i=0;i<s.length();i++)
+       {
+           mp[s[i]]++;
+           mp[t[i]]--;
+       }
+        for(auto it:mp)
+        {
+            if(it.second)return false;
+        }
+       return true; 
+    }
+  ...........................................................
+  class Logger {
+public:
+    /** Initialize your data structure here. */
+    unordered_map<string,int> mp;
+    Logger() {
+        
+    }
+    
+    /** Returns true if the message should be printed in the given timestamp, otherwise returns false.
+        If this method returns false, the message will not be printed.
+        The timestamp is in seconds granularity. */
+    bool shouldPrintMessage(int timestamp, string message) 
+    {
+        if(mp.count(message))
+        {
+           if(abs(timestamp - mp[message]) < 10)
+           {
+               return false;
+           }
+        }
+        
+            mp[message]=timestamp;
+            return true;
+        
+        
+    }
+};
+
+  
+    

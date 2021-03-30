@@ -1,0 +1,73 @@
+1. Min Stack
+2. Remove All Adjacent Duplicates In String
+
+class MinStack
+{
+     stack<pair<int,int>> st;
+public:
+    /** initialize your data structure here. */
+  
+    void push(int val)
+    {
+        int mins;
+        if(st.empty())
+        {
+            mins=val;
+        }
+        else
+        {
+            mins=min(st.top().second,val);
+        }
+        st.push({val,mins});
+    }
+    
+    void pop()
+    {
+        st.pop();
+    }
+    
+    int top()
+    {
+        return st.top().first;
+    }
+    
+    int getMin() 
+    {
+        return st.top().second;
+    }
+   
+};
+
+...............................................
+
+class Solution {
+public:
+    string removeDuplicates(string s) 
+    {
+        stack<char> st;
+        string ans;
+        for(int i=0;i<s.length();i++)
+        {
+           if(st.empty())
+           {
+               st.push(s[i]);
+           }
+           else if(s[i]==st.top())
+           {
+              st.pop();   
+           }
+            else
+            {
+                st.push(s[i]);
+            }
+        }
+        while(st.empty()==false)
+        {
+            char ch=st.top();
+            ans+=ch;
+            st.pop();
+        }
+        reverse(ans.begin(),ans.end());
+       return ans; 
+    }
+};

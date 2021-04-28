@@ -1,0 +1,99 @@
+Cousins in Binary Tree
+First and Last position of Element in a Sorted array
+class Solution {
+public:
+    bool isCousins(TreeNode* root, int x, int y)
+    {
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            bool sibling=false;
+            bool cousin=false;
+            int count=q.size();
+            for(int i=0;i<count;i++)
+            {
+                TreeNode *curr=q.front();
+                q.pop();
+                if(curr==NULL)
+                {
+                    sibling=false;
+                }else
+                {
+                    if(curr->val == x || curr->val == y)
+                    {
+                        if(!cousin)
+                        {
+                            sibling=cousin=true;
+                        }else
+                        {
+                            return !sibling;
+                        }
+                    }
+                   if(curr->left!=NULL) q.push(curr->left);
+                   if(curr->right!=NULL) q.push(curr->right);
+                   q.push(NULL); 
+                }
+            }
+           if(cousin) return false; 
+        }
+        return false;
+    }
+};
+................................................................................................
+class Solution {
+public:
+    int getfirst(vector<int>&nums,int beg,int last,int target,int n)
+    {
+        if(beg<=last)
+        {
+            int mid=beg+(last-beg)/2;
+            if((mid==0 || nums[mid-1] < target)&& nums[mid]==target)
+            {
+                return mid;
+            }
+            if(nums[mid]<target)
+            {
+                return getfirst(nums,mid+1,last,target,n);
+            }
+            else
+            {
+                return getfirst(nums,beg,mid-1,target,n);
+            }
+        }
+        return -1;
+    }
+    int getlast(vector<int>&nums,int beg,int last,int target,int n)
+    {
+        if(beg<=last)
+        {
+            int mid=beg+(last-beg)/2;
+            if((mid==n-1 || nums[mid+1]>target) && nums[mid]==target)
+            {
+                return mid;
+            }
+            if(nums[mid]>target)
+            {
+                return getlast(nums,beg,mid-1,target,n);
+            }
+            else
+            {
+                return getlast(nums,mid+1,last,target,n);
+            }
+            
+        }
+       return -1;
+    }
+    vector<int> searchRange(vector<int>& nums, int target)
+    {
+        int n=nums.size();
+        vector<int> ans(2,-1);
+        int first = getfirst(nums,0,n-1,target,n);
+        int last = getlast(nums,0,n-1,target,n);
+        ans[0]=first;
+        ans[1]=last;
+        return ans;
+    }
+};
+
+...............................

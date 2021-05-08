@@ -44,3 +44,36 @@ public:
     }
     
 };
+
+Iterative
+bool isSameTree(TreeNode* p, TreeNode* q)
+    {
+        queue<TreeNode*> qu;
+        qu.push(p);
+        qu.push(q);
+        while(qu.size()!=0)
+        {
+            TreeNode *t1=qu.front();
+            qu.pop();
+            TreeNode *t2=qu.front();
+            qu.pop();
+            if(t1==NULL && t2==NULL)
+            {
+                continue;
+            }
+            if(t1==NULL || t2==NULL)
+            {
+                return false;
+            }
+            if(t1->val != t2->val)
+            {
+                return false;
+            }
+            qu.push(t1->left);
+            qu.push(t2->left);
+            qu.push(t1->right);
+            qu.push(t2->right);
+        }
+        return true;
+    }
+    

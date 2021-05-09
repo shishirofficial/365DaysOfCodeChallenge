@@ -1,0 +1,66 @@
+Find Mode in a Binary Search Treee
+Average of Levels in a Binary Tree
+
+class Solution {
+public:
+    unordered_map<int,int> mp;
+    void dfs(TreeNode *root)
+    {
+        if(root==NULL) return;
+        mp[root->val]++;
+        dfs(root->left);
+        dfs(root->right);
+    }
+    vector<int> findMode(TreeNode* root)
+    {
+        vector<int> res;
+        int t_max=-1;
+        dfs(root);
+        for(auto it:mp)
+        {
+            if(it.second == t_max)
+            {
+                res.push_back(it.first);
+            }
+            else if(it.second > t_max)
+            {
+                t_max=it.second;
+                res = {it.first};
+            }        
+        }
+        return res;
+    }
+};
+
+......................................................................
+class Solution {
+public:
+    vector<double> averageOfLevels(TreeNode* root)
+    {
+        vector<double> res;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            double level_sum=0;
+            int size=q.size();
+            int no=size;
+            while(size--)
+            {
+                TreeNode *t=q.front();
+                q.pop();
+                level_sum+=t->val;
+                if(t->left!=NULL)
+                {
+                    q.push(t->left);
+                }
+                if(t->right!=NULL)
+                {
+                    q.push(t->right);
+                }
+            }
+            res.push_back((double)level_sum/no);
+        }
+       return res; 
+    }
+};

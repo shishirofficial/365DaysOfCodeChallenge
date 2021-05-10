@@ -1,0 +1,46 @@
+Search in a Binary Search Tree
+Increasing Order Search Tree
+
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val)
+    {
+        if(root==NULL || root->val==val)
+        {
+            return root;
+        }
+        if(val < root->val)
+        {
+            return searchBST(root->left,val);
+        }
+        else
+        {
+            return searchBST(root->right,val);
+        }
+        return root;
+    }
+};
+.............................................................................
+class Solution {
+public:
+    void dfs(TreeNode *&ans,TreeNode *root)
+    {
+        if(!root)
+        {
+            return;
+        }
+        dfs(ans,root->left);
+        ans->right = new TreeNode(root->val);
+        ans = ans->right;
+        dfs(ans,root->right);
+    }
+    
+    TreeNode *increasingBST(TreeNode* root)
+    {  
+        TreeNode *temp;
+        TreeNode *ans = new TreeNode();
+        temp = ans;
+        dfs(ans,root);
+        return temp->right;
+    }
+};
